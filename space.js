@@ -1,11 +1,26 @@
 
 var rocket;
 var bg;
+var enemy1=[];
+var f;
+var s =0;
+var u =0;
 
 function startGame() {
     shoot = new component(57, 20, "./images/shoot1.png", 154, 292, "image");
     rocket = new component(164, 80, "./images/myship.png", 10, 260, "image");
     bg = new component(1300, 600, "./images/stars bg.jpg", 0, 0, "background");
+    for (var a=0;a<=3;a+=1){ 
+        s += 300;
+    enemy1[a]=new component (164, 80, "./images/enemy 01.png", 500 + Math.random()*1000 + s,  Math.random()*500, "image");
+    }
+    for (var b=0;b<=30;b+=1){ 
+        
+        u += 500;
+    enemy2=new component (164, 80, "./images/enemy 02.png", 500 + Math.random()*800 + u, Math.random()*500, "image");
+    }
+    
+
     GameArea.start();
 }
 
@@ -25,6 +40,7 @@ var GameArea = {
         window.addEventListener('keyup', function (e) {
             GameArea.key = false;
         })
+
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -48,6 +64,7 @@ function component(width, height, color, x, y, type) {
     this.y = y;    
     this.update = function() {
         ctx = GameArea.context;
+        console.log(this.image);
         if (type == "image" || type == "background") {
             ctx.drawImage(this.image, 
                 this.x, 
@@ -99,13 +116,35 @@ function component(width, height, color, x, y, type) {
         { rocket.speedY = 0; }
         
         }
+   this.moveenemy = function(){
+            
+            this.speedX = -1;
+           
+        }    
 
+    this.update1 = function() {
+    ctx = GameArea.context;
+    console.log(this.image);
+    if (type == "image") {
+        ctx.drawImage(this.image, 
+            this.x, 
+            this.y,
+            this.width, this.height);
+    } 
 
-
+    this.newPos1 = function() {
+        
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        
+    }    
 }
 
 
 
+ 
+}
 
 function updateGameArea() {
     GameArea.clear();
@@ -118,8 +157,16 @@ function updateGameArea() {
     shoot.newPos();    
     shoot.update();
     rocket.bound();
-    
+    for(var w=0;w<30;w+=1){
+    enemy1[w].update1();
+    enemy1[w].newPos1();
+    enemy1[w].moveenemy();}
+    for(var v=0;v<30;v+=1){
+    enemy2[v].update1();
+    enemy2[v].newPos1();
+    enemy2[v].moveenemy();}
 
+    
 }
 
 function upu(){
