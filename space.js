@@ -1,3 +1,6 @@
+//music code
+var backMusic  = new Audio('./sounds/Grenade.mp3');
+
 var rocket;
 var bg;
 var enemy1=[];
@@ -9,17 +12,20 @@ var q =0;
 var r =0;
 var score =0;
 
-// var shoot=[];
+// var shoots=[];
 // var myScore;
 
 function startGame() {
+    backMusic = new Audio('./sounds/Grenade.mp3');
+   
+    // backMusic.loop =true;
 
     shoot = new component(57, 20, "./images/shoot1.png", 154, 292, "image");
     // for(o= 0;o<1000; o+=1){
     //     shoot[o] = new component(57, 20, "./images/shoot1.png", 154, 292, "img");;
     // }
 
-    bg = new component(1300, 600, "./images/stars bg.jpg", 0, 0, "background");
+    bg = new component(window.innerWidth + 1300, window.innerHeight, "./images/stars bg.jpg", 0, 0, "background");
 
     for (var a=0; a<=100; a+=1){ 
         p += 300;
@@ -37,6 +43,11 @@ function startGame() {
     }
     
     rocket = new component(164, 80, "./images/myship.png", 10, 260, "image");
+    myScore = new component("30px", "Consolas", "white", 280, 40, "text");
+    // gameover = new component("30px", "Consolas", "white", window.innerWidth/2, window.innerHeight/2, "text");
+    go = new component(200, 200, "./images/enemy 02.png", 400, 300, "image");
+
+
 
     GameArea.start();
     return false;
@@ -50,7 +61,7 @@ var GameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
-        this.interval = setInterval(upu, 20);
+        
 
         window.addEventListener('keydown', function (e) {
             GameArea.key = e.keyCode;
@@ -93,7 +104,13 @@ function component(width, height, color, x, y, type) {
                 this.x + this.width, 
                 this.y,
                 this.width, this.height);
+            }
         }
+
+        else if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
         }
         //otherwise
         else {
@@ -153,12 +170,12 @@ function component(width, height, color, x, y, type) {
         }
     }
     
-    //moving rocket- Key Controls------------------------------------------------------------
+    //moving rocket- Key Controls--------------change key speed values - easy/difficult.----------------------------------------------
     this.moverocket = function(){
     if (GameArea.key == 38) 
-    {rocket.speedY = -2; }
+    {rocket.speedY = -2.5; }
     if (GameArea.key == 40) 
-    {rocket.speedY = 2; }
+    {rocket.speedY = 2.5; }
     }
     this.bound = function(){
         if (this.y < 10) 
@@ -182,18 +199,29 @@ function component(width, height, color, x, y, type) {
 
     //moving enemies- speed controls-----------------------------------------------------------
     this.moveenemy1 = function(){
-            
-            this.speedX = -1.5;
+            if(score> 200){
+                this.speedX = -2.5;
+            }
+            else if(score > 500){ this.speedX = -4;}
+            else{
+            this.speedX = -2;}
+
            
         }    
     this.moveenemy2 = function(){
-            
-            this.speedX = -1.8;
+        if(score> 200){
+            this.speedX = -3.5;
+        }else if(score > 500){ this.speedX = -5;}
+        else{           
+            this.speedX = -2.5;}
            
         }
     this.moveenemy3 =  function(){
-            
-            this.speedX = -2.5;           
+        if(score> 200){
+            this.speedX = -4.5;
+        }else if(score > 500){ this.speedX = -7;}
+        else{
+            this.speedX = -3;  }         
         }        
 
     this.update1 = function() {
@@ -209,6 +237,18 @@ function component(width, height, color, x, y, type) {
         this.x += this.speedX;
         this.y += this.speedY;
     }  
+
+    //shoot control over canvas---------------to prevent from adding extra-----------------------------
+    this.newPos2 = function() {
+        if(this.x < GameArea.canvas.width)
+        {
+            this.x += this.speedX;
+        }
+        else{
+            this.y = -100;
+        }
+    }  
+
     // this.updateshoot = function() {
     //     ctx = GameArea.context;
     //     // console.log(this.image);
@@ -232,41 +272,46 @@ var m;
 var g;
 var h;
 // adding count for score
-var count;
+var count = 0;
 function updateGameArea() {
     for(k =0; k<enemy1.length; k++){
         if (shoot.crashWith(enemy1[k])) {
             score+=10;
-            document.getElementById('gameScore').innerHTML = score;
-        // // console.log(score)
+           
         // enemy1 = enemy1.splice(k, 1);
         // k--;
-        // document.location.reload(true);
+        // document.location.reload();
         enemy1[k].width = 0;
         enemy1[k].height =0;
         enemy1[k].y =-100;
         shoot.y = -200;
-      
+       
         
         }
     }
-    for(l =0; l<enemy2.length; l++){
-        if (shoot.crashWith(enemy2[l])) {
-        score +=20;
-        document.getElementById('gameScore').innerHTML = score;
-        // console.log(score)
-        enemy2[l].width = 0;
-        enemy2[l].height =0;
-        enemy2[l].y =-100;
-        shoot.y = -200;
+    for(l =0 , count=0; l<enemy2.length; l++){
         
+        if (shoot.crashWith(enemy2[l])) {
+            count+=1;
         }
+        if (shoot.crashWith(enemy2[l])){
+            // console.log(count)
+            // if(count == 2){
+                score +=20;
+                console.log('hi')
+       
+            enemy2[l].width = 0;
+            enemy2[l].height =0;
+            enemy2[l].y =-100;
+            shoot.y = -200;}
+        count = 0;
+        
+        
     }
     for( m =0; m<enemy3.length; m++){
         if (shoot.crashWith(enemy3[m])) {
         score +=30;
-        document.getElementById('gameScore').innerHTML = score;
-        // console.log(score)
+       
         enemy3[m].width = 0;
         enemy3[m].height =0;
         enemy3[m].y =-100;
@@ -275,20 +320,32 @@ function updateGameArea() {
     }
 
     //when enemy hits rocket
+   
     for ( h=0; h<enemy1.length; h++){
         if(rocket.crashWithRocket(enemy1[h])){
+            // gameover.text="gameover";
+            // console.log("sj")
+            // gameover.update();
+            go.update();
             startGame.stop();
+          
            
         }
     }
     for ( h=0; h<enemy2.length; h++){
         if(rocket.crashWithRocket(enemy2[h])){
+            // gameover.text="gameover";
+            // gameover.update();
+            go.update();
             startGame.stop();
             //reference to game over page.
         }
     }
     for ( h=0; h<enemy3.length; h++){
         if(rocket.crashWithRocket(enemy3[h])){
+            // gameover.text="gameover";
+            // gameover.update();
+            go.update();
             startGame.stop();
             //reference to game over page.
         }
@@ -300,6 +357,9 @@ function updateGameArea() {
     bg.speedX = -1;
     bg.newPos();    
     bg.update();
+
+    // backMusic.play();
+    backMusic.loop =true;   
 
 
     rocket.bound();
@@ -322,10 +382,13 @@ function updateGameArea() {
     rocket.moverocket();
     rocket.newPos();    
     rocket.update();
-    rocket.speedY = 0;
+
+    // rocket.speedY = 0;
 
     shoot.update1();
-    shoot.newPos();
+    shoot.newPos2();
+    shoot.shooting();
+    shoot.occurence();
    
     //  for(var g= 0;g<1000; g+=1){
     //     shoot[g].newPos();    
@@ -333,12 +396,7 @@ function updateGameArea() {
     //     shoot[g].shooting();
     //     shoot[g].occurence();}
     
+    myScore.text="SCORE: " + score;
+    myScore.update();
 }   
-    
 
-
-function upu(){
-    
-    shoot.shooting();
-    shoot.occurence();
-}
