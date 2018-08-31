@@ -39,13 +39,21 @@ function startGame() {
 
     for (var c=0; c<=100; c++){
         r += 600;
+<<<<<<< HEAD
     enemy3[c] =new component (164, 100, "./images/enemy 03.png", 800 + Math.random()*800 + r, Math.random()*500, "image");
+=======
+    enemy3[c] =new component (164, 80, "./images/enemy 03.png", 800 + Math.random()*800 + r, Math.random()*500, "image");
+>>>>>>> eb12488f4d45dfc47421aaee8feb54e8f1e843de
     }
     
     rocket = new component(164, 80, "./images/myship.png", 10, 260, "image");
     myScore = new component("30px", "Consolas", "white", 280, 40, "text");
     // gameover = new component("30px", "Consolas", "white", window.innerWidth/2, window.innerHeight/2, "text");
+<<<<<<< HEAD
     go = new component(1300, 600, "./images/game-over.png", 0, 0, "image");
+=======
+    go = new component(200, 200, "./images/enemy 02.png", 400, 300, "image");
+>>>>>>> eb12488f4d45dfc47421aaee8feb54e8f1e843de
 
 
 
@@ -304,7 +312,11 @@ function updateGameArea() {
             enemy2[l].height =0;
             enemy2[l].y =-100;
             shoot.y = -200;}
+<<<<<<< HEAD
             count = 0;
+=======
+        count = 0;
+>>>>>>> eb12488f4d45dfc47421aaee8feb54e8f1e843de
         
         
     }
