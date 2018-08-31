@@ -2,17 +2,28 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+<!-- <meta http-equiv="refresh" content="1"> -->
+<link rel="stylesheet" href="space.css">
 <style>
+    body{
+        background-image: url("./images/body bg.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 canvas {
     border:1px solid hsl(0, 0%, 83%);
-    background-color: black;
+    background: black;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+    display: block;
+
 }
 </style>
 </head>
-<body onload="startGame()">
+<body onload="startGame(); backMusic.play();">
     <script src="space.js"></script>
-
-    
+    <!-- <h2 id="gameScore">SCORE:</h2>     -->
 </body>
 </html>
