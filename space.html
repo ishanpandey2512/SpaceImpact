@@ -20,14 +20,47 @@ canvas {
     display: block;
 
 }
+button {
+  filter: drop-shadow(0 1px 1px  rgba(#fff, 0));
+  background: rgba(0,0,0,0.4);
+  border: 4;
+  border-radius: 4px 0 0 4px;
+  font-size: 30px;
+  padding: 5px 10px;
+  position: relative;
+  animation-duration: 5s;
+  animation-timing-function: ease-in;
+  cursor: pointer;
+  margin-left: 10px;
+  box-shadow :8px 0 18px 4px #fff, 83px 0 12px 1px transparent;
+  margin-top: 0px;
+  
+  
+}
+button:hover {
+  animation-name: shakeAnim;
+}
+
+a {
+  text-decoration : none;
+  color: white;
+  font-family: 'Sawarabi Mincho', sans-serif;
+}
+
+@keyframes shakeAnim {
+  0% {left: 0}
+  1% {left: -3px}
+  2% {left: 5px}
+  3% {left: -8px}
+  4% {left: 8px}
+  5% {left: -5px}
+  6% {left: 3px}
+  7% {left: 0}
+}
 </style>
 </head>
-<body onload="startGame(); backMusic.play();">
-<<<<<<< HEAD
-    <script src="space.js"></script>
-=======
-    <script src="space1.js"></script>
->>>>>>> eb12488f4d45dfc47421aaee8feb54e8f1e843de
-    <!-- <h2 id="gameScore">SCORE:</h2>     -->
+<body onload="startGame()">
+<script src="space.js"></script>
+<button onclick="startGame()" > *RESTART* </button>
 </body>
 </html>

@@ -2,29 +2,36 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+<link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
 
 <style>
-body{background-image: url("load img.png");
+body{background-image: url("./images/load img.png");
     background-repeat: no-repeat;
 }
 button {
-  background :gray;
-  border: 2;
-  border-radius: 20%;
+  filter: drop-shadow(0 1px 1px  rgba(#fff, 0));
+  background: rgba(0,0,0,0.4);
+  border: 4;
+  border-radius: 4px 0 0 4px;
   font-size: 30px;
-  font-weight:900;
-  color:whitesmoke;
-  padding: 10px 20px;
+  padding: 5px 10px;
   position: relative;
   animation-duration: 5s;
   animation-timing-function: ease-in;
   cursor: pointer;
   margin-top: 500px;
-  margin-left: 750px;
+  margin-left: 850px;
+  box-shadow :8px 0 18px 4px #fff, 83px 0 12px 1px transparent;
+  
 }
 button:hover {
   animation-name: shakeAnim;
+}
+
+a {
+  text-decoration : none;
+  color: white;
+  font-family: 'Sawarabi Mincho', sans-serif;
 }
 
 @keyframes shakeAnim {
@@ -43,7 +50,7 @@ button:hover {
 </head>
 <body>
     
-     <button ><a href="space.html"> START >>> </a></button>
+     <button ><a href="space.html" > START >>> </a></button>
 
     
 </body>
